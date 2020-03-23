@@ -1,42 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const App = () => {
+class App extends Component {
 
-  const addRows = () => [
+  constructor() {
+    super();
+    this.state = {
+      users: [
+        {
+          name: "William",
+          email: "info@wmeza.com",
+          link: "wmeza.com"
+        },
+        {
+          name: "Platzi",
+          email: "team@platzi.com",
+          link: "platzi.com"
+        }
+      ]
+    }
+  }
+
+  addRows = () => (
+    this.state.users.map(user => (
       <tr>
-        <td>William</td>
-        <td>Williameduardomeza@gmail.com</td>
-        <td>wmeza.com</td>
-      </tr>,
-      <tr>
-        <td>Platzi</td>
-        <td>platzi@platzi.com</td>
-        <td>platzi.com</td>
+        <td>{user.name}</td>
+        <td>{user.email}</td>
+        <td>{user.link}</td>
       </tr>
-  ];
-
-  return (
-    <div className="table-margin">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>
-              Name
-            </th>
-            <th>
-              Email
-            </th>
-            <th>
-              Link
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          { addRows() }
-        </tbody>
-      </table>
-    </div>
+    ))
   );
+
+  render() {
+    return (
+      <div className="table-margin">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>
+                Name
+              </th>
+              <th>
+                Email
+              </th>
+              <th>
+                Link
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.addRows() }
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
  
 export default App;
