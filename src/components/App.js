@@ -1,6 +1,20 @@
 import React from 'react';
 
 const App = () => {
+
+  const addRows = () => [
+      <tr>
+        <td>William</td>
+        <td>Williameduardomeza@gmail.com</td>
+        <td>wmeza.com</td>
+      </tr>,
+      <tr>
+        <td>Platzi</td>
+        <td>platzi@platzi.com</td>
+        <td>platzi.com</td>
+      </tr>
+  ];
+
   return (
     <div className="table-margin">
       <table className="table">
@@ -18,16 +32,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>William</td>
-            <td>Williameduardomeza@gmail.com</td>
-            <td>wmeza.com</td>
-          </tr>
-          <tr>
-            <td>Platzi</td>
-            <td>platzi@platzi.com</td>
-            <td>platzi.com</td>
-          </tr>
+          { addRows() }
         </tbody>
       </table>
     </div>
