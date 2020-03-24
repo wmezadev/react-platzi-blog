@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      users: [
-        {
-          name: "William",
-          email: "info@wmeza.com",
-          link: "wmeza.com"
-        },
-        {
-          name: "Platzi",
-          email: "team@platzi.com",
-          link: "platzi.com"
-        }
-      ]
+      users: []
     }
+  }
+
+  async componentDidMount() {
+    const resp = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+    this.setState({
+      users: resp.data
+    });
   }
 
   addRows = () => (
@@ -25,7 +21,7 @@ class App extends Component {
       <tr>
         <td>{user.name}</td>
         <td>{user.email}</td>
-        <td>{user.link}</td>
+        <td>{user.website}</td>
       </tr>
     ))
   );
