@@ -18,7 +18,7 @@ class App extends Component {
 
   addRows = () => (
     this.state.users.map(user => (
-      <tr>
+      <tr key={user.id}>
         <td>{user.name}</td>
         <td>{user.email}</td>
         <td>{user.website}</td>
