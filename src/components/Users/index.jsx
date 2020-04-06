@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import * as usersActions from '../../actions/userActions';
 class Users extends Component {
 
   constructor() {
@@ -10,11 +11,12 @@ class Users extends Component {
     }
   }
 
-  async componentDidMount() {
-    const resp = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+  componentDidMount() {
+   /*  const resp = await axios.get(`https://jsonplaceholder.typicode.com/users`);
     this.setState({
       users: resp.data
-    });
+    }); */
+    this.props.getAll();
   }
 
   addRows = () => (
@@ -28,6 +30,7 @@ class Users extends Component {
   );
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <table className="table">
@@ -57,4 +60,4 @@ const mapStateToProps = (reducers) => {
   return reducers.userReducer;
 }
  
-export default connect(mapStateToProps, {/* Actions */})(Users);
+export default connect(mapStateToProps, usersActions)(Users);
