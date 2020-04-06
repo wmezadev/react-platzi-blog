@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as usersActions from '../../actions/userActions';
 import Spinner from '../Global/Spinner';
 import Fatal from '../Global/Fatal';
+import Table from './Table';
 class Users extends Component {
 
   componentDidMount() {
@@ -18,41 +19,13 @@ class Users extends Component {
       return <Fatal message={this.props.error}/>;
     }
     
-    return(
-      <table className="table">
-        <thead>
-          <tr>
-            <th>
-              Name
-            </th>
-            <th>
-              Email
-            </th>
-            <th>
-              Link
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          { this.addRows() }
-        </tbody>
-      </table>
-    )
+    return <Table/>;
   }
-
-  addRows = () => (
-    this.props.users.map(user => (
-      <tr key={user.id}>
-        <td>{user.name}</td>
-        <td>{user.email}</td>
-        <td>{user.website}</td>
-      </tr>
-    ))
-  );
 
   render() {
     return (
       <div>
+        <h1>Users</h1>
         {this.renderContent()}
       </div>
     );
