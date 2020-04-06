@@ -1,0 +1,32 @@
+body {
+margin: 0;
+}
+
+.page-container {
+margin: 100px;
+}
+
+.table {
+width: 100%;
+text-align: left;
+}
+
+.table td {
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+#menu {
+background-color: #253A46;
+padding: 20px;
+font-size: 20px;
+}
+
+#menu a {
+color: white;
+padding-right: 50px;
+}
+
+.center {
+    text-align: center;
+}
