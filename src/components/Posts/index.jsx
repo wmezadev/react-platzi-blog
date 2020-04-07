@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as usersActions from '../../actions/userActions';
+import * as userActions from '../../actions/userActions';
+import * as postActions from '../../actions/postActions';
+
+const { getAll: userGetAll } = userActions;
+const { getAll: postGetAll } = postActions;
 class Posts extends Component {
 
     componentDidMount() {
-        if(!this.props.users.length) {
-            this.props.getAll();
+        if(!this.props.userReducer.users.length) {
+            this.props.userGetAll();
         }
     }
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <h1> Post from </h1>
@@ -19,8 +24,15 @@ class Posts extends Component {
     }
 }
 
-const mapStateToProps = (reducers) => {
-    return reducers.userReducer;
+const mapStateToProps = ({ userReducer, postsReducer }) => {
+    return { 
+        userReducer,
+        postsReducer
+    };
 };
 
-export default connect(mapStateToProps, usersActions)(Posts);
+const mapDispatchToProps = {
+    userGetAll,
+    postGetAll
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
