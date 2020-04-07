@@ -14,7 +14,7 @@ export const getAll = () => async (dispatch) => {
     } catch (error){
         dispatch({
             type: ERROR,
-            payload: 'Something is wrong, try again later.'
+            payload: 'Users info is wrong, try again later.'
         });
     }
 

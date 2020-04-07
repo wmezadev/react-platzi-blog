@@ -20,7 +20,7 @@ class Posts extends Component {
             await userGetAll();
         }
         if(this.props.userReducer.error){
-            return null;
+            return;
         }
         if(!('posts_key' in this.props.userReducer.users[key])){
             postGetByUser(key);
@@ -48,11 +48,52 @@ class Posts extends Component {
         );
     }
 
+    setPosts = () => {
+        const {
+            userReducer,
+            userReducer: { users },
+            postsReducer,
+            postsReducer: { posts },
+            match: { params: { key }}
+        } = this.props;
+
+        if(!users.length) return;
+        if(userReducer.error) return;
+
+        if(postsReducer.loading) {
+            return <Spinner/>;
+        }
+
+        if(postsReducer.error){
+            return <Fatal message={postsReducer.error}/>;
+        }
+
+        if(!posts.length) return;
+        if(!('posts_key' in users[key])) return;
+        
+        const { posts_key } = users[key];
+
+        return posts[posts_key].map((post) => (
+            <div 
+                className="post_title" 
+                key={post.id}
+                onClick={() => alert(post.id)}
+            >
+                <h2>
+                    { post.title }
+                </h2>
+                <h3>
+                    { post.body }
+                </h3>
+            </div>
+        ));
+    }
+
     render() {
-        console.log(this.props)
         return (
             <div>
                 { this.setUser() }
+                { this.setPosts() }
             </div>
         );
     }

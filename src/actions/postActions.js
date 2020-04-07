@@ -27,19 +27,19 @@ export const getByUser = (key) => async (dispatch, getState) => {
         }
 
         dispatch({
-            type: USERS_GET_ALL,
-            payload: updated_users
+            type: GET_BY_USER,
+            payload: updated_posts
         });
 
         dispatch({
-            type: GET_BY_USER,
-            payload: updated_posts
+            type: USERS_GET_ALL,
+            payload: updated_users
         });
 
     } catch (error) {
         dispatch({
             type: ERROR,
-            payload: 'Something is wrong, try again later.'
+            payload: 'Post no available, try again later.'
         })
     }
 }
