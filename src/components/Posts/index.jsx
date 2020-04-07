@@ -4,13 +4,14 @@ import * as userActions from '../../actions/userActions';
 import * as postActions from '../../actions/postActions';
 
 const { getAll: userGetAll } = userActions;
-const { getAll: postGetAll } = postActions;
+const { getByUser: postGetByUser } = postActions;
 class Posts extends Component {
 
-    componentDidMount() {
+    async componentDidMount() {
         if(!this.props.userReducer.users.length) {
-            this.props.userGetAll();
+            await this.props.userGetAll();
         }
+        this.props.postGetByUser(this.props.match.params.key);
     }
 
     render() {
@@ -33,6 +34,6 @@ const mapStateToProps = ({ userReducer, postsReducer }) => {
 
 const mapDispatchToProps = {
     userGetAll,
-    postGetAll
+    postGetByUser
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

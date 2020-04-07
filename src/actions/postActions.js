@@ -1,13 +1,24 @@
 import axios from 'axios';
-import { GET_ALL, ERROR } from '../types/postTypes';
+import { ERROR, GET_BY_USER, LOADING } from '../types/postTypes';
 
-export const getAll = () => async (dispatch) => {
+export const getByUser = (id) => async (dispatch, getState) => {
+    dispatch({
+        type: LOADING
+    });
+    const { users } = getState().userReducer;
+    const { posts } = getState().postsReducer;
+    const user_id = users[id].id;
+
     try {
-        const resp = await axios.get(`https://jsonplaceholder.typicode.com/posts`);   
+        const resp = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${user_id}`);
+        const updated_posts = [
+            ...posts,
+            resp.data
+        ];
         dispatch({
-            type: GET_ALL,
-            payload: resp.data
-        });
+            type: GET_BY_USER,
+            payload: updated_posts
+        })
     } catch (error) {
         dispatch({
             type: ERROR,
