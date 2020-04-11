@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ERROR, UPDATE_POSTS, LOADING } from '../types/postTypes';
+import { ERROR, UPDATE_POSTS, LOADING, UPDATE_COMMENTS, COM_LOADING, COM_ERROR } from '../types/postTypes';
 import * as userTypes from '../types/userTypes';
 
 const { GET_ALL: USERS_GET_ALL } = userTypes;
@@ -72,5 +72,37 @@ export const togglePost = (posts_key, com_key) => (dispatch , getState) => {
         type: UPDATE_POSTS,
         payload: updatedPosts
     });
+
+}
+
+export const getComments = (posts_key, com_key) => async (dispatch, getState) => {
+    dispatch({
+        type: COM_LOADING
+    });
+    
+    const { posts } = getState().postsReducer;
+    const selected = posts[posts_key][com_key];
+    try {
+        const resp = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${selected.id}`);
+        const updated = {
+            ...selected,
+            comments: resp.data
+        }
+        const updatedPosts = [...posts];
+        updatedPosts[posts_key] = [
+            ...posts[posts_key]
+        ];
+        updatedPosts[posts_key][com_key] = updated;
+        dispatch({
+            type: UPDATE_COMMENTS,
+            payload: updatedPosts
+        });
+        
+    } catch (error) {
+        dispatch({
+            type: COM_ERROR,
+            payload: 'Comments no available, try again later.'
+        })
+    }
 
 }

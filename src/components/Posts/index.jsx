@@ -4,9 +4,14 @@ import Spinner from '../Global/Spinner';
 import Fatal from '../Global/Fatal';
 import * as userActions from '../../actions/userActions';
 import * as postActions from '../../actions/postActions';
+import Comments from './Comments';
 
 const { getAll: userGetAll } = userActions;
-const { getByUser: postGetByUser, togglePost } = postActions;
+const { 
+    getByUser: postGetByUser, 
+    togglePost,
+    getComments
+} = postActions;
 class Posts extends Component {
 
     async componentDidMount() {
@@ -81,7 +86,9 @@ class Posts extends Component {
             <div 
                 className="post_title" 
                 key={post.id}
-                onClick={() => this.props.togglePost(posts_key, com_key)}
+                onClick={
+                    () => this.showComments(posts_key, com_key, post.comments)
+                }
             >
                 <h2>
                     { post.title }
@@ -90,11 +97,18 @@ class Posts extends Component {
                     { post.body }
                 </h3>
                 {
-                    post.opened ? 'open' : 'closed'
+                    post.opened ? <Comments comments={post.comments}/> : null
                 }
             </div>
         ))
     );
+
+    showComments = (posts_key, com_key, comments) => {
+        this.props.togglePost(posts_key, com_key);
+        if(!comments.length) {
+            this.props.getComments(posts_key, com_key);
+        }
+    }
 
     render() {
         return (
@@ -116,6 +130,7 @@ const mapStateToProps = ({ userReducer, postsReducer }) => {
 const mapDispatchToProps = {
     userGetAll,
     postGetByUser,
-    togglePost
+    togglePost,
+    getComments
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
