@@ -1,4 +1,4 @@
-import { LOADING, ERROR, GET_BY_USER } from '../types/postTypes';
+import { LOADING, ERROR, UPDATE_POSTS } from '../types/postTypes';
 
 const INITIAL_STATE = {
     posts: [],
@@ -12,7 +12,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, loading: true };
         case ERROR:
             return { ...state, error: action.payload, loading: false }
-        case GET_BY_USER:
+        case UPDATE_POSTS:
             return {
                 ...state,
                 posts: action.payload,
