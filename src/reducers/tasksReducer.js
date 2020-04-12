@@ -1,15 +1,23 @@
-import { GET_ALL, LOADING, ERROR } from '../types/taskTypes';
+import { GET_ALL, LOADING, ERROR, SET_USER_ID, SET_TITLE, TASK_SAVED } from '../types/taskTypes';
 
 const INITIAL_STATE = {
     tasks: {},
     loading: false,
-    error: ''
+    error: '',
+    user_id: '',
+    title: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case GET_ALL:
             return { ...state, tasks: action.payload, loading: false , error: ''};
+        case SET_USER_ID:
+            return { ...state, user_id: action.payload };
+        case SET_TITLE:
+            return { ...state, title: action.payload };
+        case TASK_SAVED:
+            return { ...state, tasks: {}, loading: false, error: '' }
         case LOADING:
             return { ...state, loading: true };
         case ERROR:
