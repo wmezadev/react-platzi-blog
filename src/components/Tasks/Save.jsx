@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Spinner from '../Global/Spinner';
 import Fatal from '../Global/Fatal';
 import * as taskActions from '../../actions/taskActions';
+import { Redirect } from 'react-router-dom';
 
 const Save = (props) => {
 
@@ -49,6 +50,7 @@ const Save = (props) => {
 
     return (
         <div>
+            { props.go_back ? <Redirect to='/tasks'/> : null }
             <h1>
                 Save task from
             </h1>
@@ -56,6 +58,7 @@ const Save = (props) => {
             <input 
                 type='number'
                 id='user_id'
+                value={props.user_id}
                 onChange={handleSetUserId}
             />
             <br/><br/>
@@ -63,6 +66,7 @@ const Save = (props) => {
             <input 
                 type='text'
                 id='title'
+                value={props.title}
                 onChange={handleSetTitle}
             />
             <br/><br/>
