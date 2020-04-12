@@ -1,4 +1,12 @@
-import { GET_ALL, LOADING, ERROR, SET_USER_ID, SET_TITLE, TASK_SAVED } from '../types/taskTypes';
+import { 
+    GET_ALL, 
+    LOADING, 
+    ERROR, 
+    SET_USER_ID, 
+    SET_TITLE, 
+    TASK_SAVED, 
+    TASK_UPDATE 
+} from '../types/taskTypes';
 
 const INITIAL_STATE = {
     tasks: {},
@@ -18,7 +26,9 @@ export default (state = INITIAL_STATE, action) => {
         case SET_TITLE:
             return { ...state, title: action.payload };
         case TASK_SAVED:
-            return { ...state, tasks: {}, loading: false, error: '', go_back: true, user_id: '', title: '' }
+            return { ...state, tasks: {}, loading: false, error: '', go_back: true, user_id: '', title: '' };
+        case TASK_UPDATE:
+            return { ...state, tasks: action.payload };
         case LOADING:
             return { ...state, loading: true };
         case ERROR:

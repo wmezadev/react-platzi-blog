@@ -35,15 +35,28 @@ const Tasks = (props) => {
         ))
     }
 
-    const setTasks = (user_id) => {
+    const setTasks = (us_id) => {
+        const { tasks, updateCheck } = props;
         const task_by_user = {
-            ...tasks[user_id]
+            ...tasks[us_id]
         }
 
-        return Object.keys(task_by_user).map((task_id) => (
-            <div key={task_id}>
-                <input type='checkbox' defaultChecked={task_by_user[task_id].completed} />
-                { task_by_user[task_id].title }
+        return Object.keys(task_by_user).map((ta_id) => (
+            <div key={ta_id}>
+                <input 
+                    type='checkbox' 
+                    defaultChecked={task_by_user[ta_id].completed} 
+                    onChange={
+						() => updateCheck(us_id, ta_id)
+					}
+                />
+                { task_by_user[ta_id].title }
+                <Link to={`/tasks/save/${us_id}/${ta_id}`} className="m_left">
+                    Edit
+                </Link>
+                <Link to='/tasks/' className="m_left">
+                    Delete
+                </Link>
             </div>
         ));
     }

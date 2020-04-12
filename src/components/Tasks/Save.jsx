@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../Global/Spinner';
 import Fatal from '../Global/Fatal';
@@ -6,6 +6,21 @@ import * as taskActions from '../../actions/taskActions';
 import { Redirect } from 'react-router-dom';
 
 const Save = (props) => {
+
+    useEffect(() => {
+        const {
+            match: { params: { us_id, ta_id } },
+            tasks,
+            setUserId,
+            setTitle
+        } = props;
+
+        if(us_id && ta_id){
+            const task = tasks[us_id][ta_id];
+            setUserId(task.userId);
+            setTitle(task.title);
+        }
+    }, [props]);
 
     const handleSetUserId = e => {
         props.setUserId(e.target.value)
@@ -17,15 +32,31 @@ const Save = (props) => {
 
     const hanldeSubmit = e => {
         e.preventDefault();
-        const { user_id, title, saveTask } = props;
+        const { 
+            match: { params: { us_id, ta_id } },
+            tasks,
+            user_id, 
+            title, 
+            saveTask,
+            editTask
+        } = props;
         const new_task = {
             userId: user_id,
             title: title,
-            completed: false,
+            completed: false
         };
 
-        saveTask(new_task);
-
+        if(us_id && ta_id){
+            const task = tasks[us_id][ta_id];
+            const edited_task = {
+                ...new_task,
+                completed: task.completed,
+                id: task.id
+            };
+            editTask(edited_task);
+        } else {
+            saveTask(new_task);
+        }
     }
 
     const disableSave = () => {
